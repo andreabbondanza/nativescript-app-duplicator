@@ -10,7 +10,6 @@ if (process.argv[3] === "--restore" || process.argv[3] === "-r") {
         console.error("No default state to restore");
     }
 }
-console.log(process.cwd());
 if (process.argv[3] === "--workwith" || process.argv[3] === "-ww") {
     new appManager_1.DewNativescriptAppManager(process.argv[2]).ConfigureSetup().WorkWith();
 }
@@ -25,6 +24,6 @@ if (process.argv[3] === "--new" || process.argv[3] === "-n") {
 if (process.argv[3] === "--delete" || process.argv[3] === "-d") {
     new appManager_1.DewNativescriptAppManager(process.argv[2]).ConfigureSetup().RemoveProject();
 }
-if (process.argv[3] === "--help" || process.argv[3] === "-h") {
+if (process.argv[2] === "--help" || process.argv[2] === "-h") {
     new appManager_1.DewNativescriptAppManager(process.argv[2]).ShowHelp();
 }
