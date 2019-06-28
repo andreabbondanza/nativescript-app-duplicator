@@ -1,0 +1,54 @@
+{
+  "name": "nativescript-app-duplicator",
+  "version": "1.0.0",
+  "markdown": "github",
+  "description": "Application duplicator for nativescript. Used to manage many apps in same project space",
+  "main": "lib/appDuplicator.js",
+  "types": "lib/appDuplicator.d.ts",
+  "bin": {
+    "ns-dup": "./bin/nsdup.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreabbondanza/nativescript-app-duplicator.git"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "nativescript",
+    "dewstrings"
+  ],
+  "files": [
+    "lib/**/*",
+    "bin/**/*"
+  ],
+  "author": "Andrea Vincenzo Abbondanza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreabbondanza/nativescript-app-duplicator/issues"
+  },
+  "homepage": "https://github.com/andreabbondanza/nativescript-app-duplicator#readme",
+  "dependencies": {
+    "@types/node": "^12.0.10",
+    "dewstrings": "^1.0.1",
+    "ncp": "^2.0.0",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "@types/ncp": "^2.0.1",
+    "@types/rimraf": "^2.0.2",
+    "prettier": "^1.15.3",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.17.0",
+    "typescript": "3.2.2"
+  }
+}
