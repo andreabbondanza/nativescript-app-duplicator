@@ -12,7 +12,8 @@ export declare class DewNativescriptAppManager {
     WorkWith(): void;
     ShowHelp(): void;
     private DuplicateResources;
-    private DuplicarePackageJson;
+    private ViewFolder;
+    private DuplicatePackageJson;
     private SetPackageJson;
     private SetPackageResources;
     private SetHome;
