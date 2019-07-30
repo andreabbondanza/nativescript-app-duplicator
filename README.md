@@ -34,6 +34,14 @@ Options than require APPNAME:
 Not require APPNAME:
 - --help or -h: show options
 
+## Starting a new project
+
+After you've created a new project with {N} cli, you have to enter in a multiproject state, so you must execute
+
+```bash
+npx ns-dup [FIRST_PROJECT_NAME] --restore
+```
+
 ## STATES
 
 ### Working state

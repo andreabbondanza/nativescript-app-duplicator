@@ -6,18 +6,21 @@ import * as rimarf from "rimraf";
 
 init();
 
-export class DewNativescriptAppManager {
+export class DewNativescriptAppManager
+{
   private _basePackageName: string = "package.json";
   private _baseResources: string = "App_Resources";
   private _packageName: string = "{0}_package.json";
   private _project: string = "";
   private _resources: string = "App_Resources_{0}";
-  private _view: string = '<Frame defaultPage="{0}/home/home-page"></Frame>';
+  private _view: string = '<Frame defaultPage="{0}_views/home/home-page"></Frame>';
   private _dir: string = "./";
-  public constructor(project: string) {
+  public constructor(project: string)
+  {
     this._project = project;
   }
-  public RestoreState() {
+  public RestoreState()
+  {
     filesystem.renameSync(
       this._dir + this._basePackageName,
       this._dir + this._packageName
@@ -32,25 +35,31 @@ export class DewNativescriptAppManager {
     this._view = '<Frame defaultPage="{0}/home/home-page"></Frame>';
   }
 
-  public Duplicate() {
+  public Duplicate()
+  {
     this.ConfigureSetup()
-      .DuplicarePackageJson()
+      .DuplicatePackageJson()
+      .ViewFolder()
       .DuplicateResources();
   }
 
-  public WorkWith() {
-    if (!filesystem.existsSync(this._dir + this._basePackageName)) {
+  public WorkWith()
+  {
+    if (!filesystem.existsSync(this._dir + this._basePackageName))
+    {
       this.ConfigureSetup()
         .SetPackageJson()
         .SetPackageResources()
-        .SetHome();
-    } else {
+        .SetHome().ViewFolder();
+    } else
+    {
       console.error(
         "Already working with a project, restore it before continue"
       );
     }
   }
-  public ShowHelp() {
+  public ShowHelp()
+  {
     console.log("command APPNAME -option");
     console.log("options: ");
     console.log(
@@ -64,17 +73,28 @@ export class DewNativescriptAppManager {
     );
     console.log("--delete or -d : Delete a project with APPNAME");
   }
-  private DuplicateResources() {
+  private DuplicateResources(): DewNativescriptAppManager
+  {
     ncp.ncp(
       this._dir + "app/" + this._baseResources,
       this._dir + "app/" + this._resources,
-      (err) => {
+      (err) =>
+      {
         if (err) return console.log(err);
       }
     );
+    return this;
   }
-
-  private DuplicarePackageJson(): DewNativescriptAppManager {
+  private ViewFolder(): DewNativescriptAppManager
+  {
+    if (!filesystem.existsSync(this._dir + "{0}_views".format([this._project])))
+    {
+      filesystem.mkdirSync(this._dir + "{0}_views".format([this._project]));
+    }
+    return this;
+  }
+  private DuplicatePackageJson(): DewNativescriptAppManager
+  {
     const json = JSON.parse(
       filesystem
         .readFileSync(this._dir + this._basePackageName, { encoding: "utf8" })
@@ -89,7 +109,8 @@ export class DewNativescriptAppManager {
     return this;
   }
 
-  private SetPackageJson(): DewNativescriptAppManager {
+  private SetPackageJson(): DewNativescriptAppManager
+  {
     filesystem.renameSync(
       this._dir + this._packageName,
       this._dir + this._basePackageName
@@ -97,7 +118,8 @@ export class DewNativescriptAppManager {
     return this;
   }
 
-  private SetPackageResources(): DewNativescriptAppManager {
+  private SetPackageResources(): DewNativescriptAppManager
+  {
     filesystem.renameSync(
       this._dir + "app/" + this._resources,
       this._dir + "app/" + this._baseResources
@@ -105,48 +127,56 @@ export class DewNativescriptAppManager {
     return this;
   }
 
-  private SetHome(): DewNativescriptAppManager {
+  private SetHome(): DewNativescriptAppManager
+  {
     filesystem.unlinkSync(this._dir + "app/" + "app-root.xml");
     filesystem.writeFileSync(this._dir + "app/" + "app-root.xml", this._view);
     return this;
   }
 
-  private RemovePlatforms(): DewNativescriptAppManager {
-    rimarf(this._dir + "platforms/", {}, () => {});
+  private RemovePlatforms(): DewNativescriptAppManager
+  {
+    rimarf(this._dir + "platforms/", {}, () => { });
     return this;
   }
 
-  public ConfigureSetup(): DewNativescriptAppManager {
+  public ConfigureSetup(): DewNativescriptAppManager
+  {
     this._view = this._view.format([this._project]);
     this._resources = this._resources.format([this._project]);
     this._packageName = this._packageName.format([this._project]);
     return this;
   }
 
-  private Remove(): DewNativescriptAppManager {
+  private Remove(): DewNativescriptAppManager
+  {
     this.RemovePlatforms()
       .RemovePackageJson()
       .RemoveResources();
     return this;
   }
 
-  private RemoveResources(): DewNativescriptAppManager {
-    rimarf(this._dir + "app/" + this._resources, {}, () => {});
+  private RemoveResources(): DewNativescriptAppManager
+  {
+    rimarf(this._dir + "app/" + this._resources, {}, () => { });
     return this;
   }
 
-  private RemovePackageJson(): DewNativescriptAppManager {
-    rimarf(this._dir + this._packageName, {}, () => {});
+  private RemovePackageJson(): DewNativescriptAppManager
+  {
+    rimarf(this._dir + this._packageName, {}, () => { });
     return this;
   }
 
-  public RemoveProject() {
+  public RemoveProject()
+  {
     const self = this;
     const r = rl.createInterface({
       input: process.stdin,
       output: process.stdout
     });
-    r.question("Do you really do? y/n" + "\n", function(answer: string) {
+    r.question("Do you really do? y/n" + "\n", function (answer: string)
+    {
       r.close();
       if (answer.toLowerCase() === "y") self.Remove();
     });
