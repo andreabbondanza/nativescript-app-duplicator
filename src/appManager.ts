@@ -87,9 +87,9 @@ export class DewNativescriptAppManager
   }
   private ViewFolder(): DewNativescriptAppManager
   {
-    if (!filesystem.existsSync(this._dir + "{0}_views".format([this._project])))
+    if (!filesystem.existsSync(this._dir + "app/{0}_views".format([this._project])))
     {
-      filesystem.mkdirSync(this._dir + "{0}_views".format([this._project]));
+      filesystem.mkdirSync(this._dir + "app/{0}_views".format([this._project]));
     }
     return this;
   }
